@@ -29,6 +29,12 @@ Hi, I am Rohith - welcome to my portfolio!
           >
             Play my quiz game
           </a>
+           <a
+            className="whitespace-nowrap flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-auto"
+            href="/2048.html"
+          >
+            Play my 2048 game
+          </a>
         </div>
       </main>
     </div>
