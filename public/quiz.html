@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rohith's Python Quiz</title>
+<style>
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #fafafa;
+    margin: 0;
+    padding: 40px 16px;
+    display: flex;
+    justify-content: center;
+  }
+  main {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  h1 { font-size: 28px; margin: 0 0 4px 0; }
+  #progress { color: #888; font-size: 14px; margin-bottom: 24px; }
+  h2 { font-size: 20px; margin: 0 0 16px 0; }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 14px 18px;
+    border-radius: 9999px;
+    border: 1px solid #ddd;
+    background: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+  }
+  .answer-btn:hover:not(:disabled) { background: #f0f0f0; }
+  .answer-btn:disabled { cursor: default; }
+  .correct { background: #dcfce7; border-color: #16a34a; }
+  .wrong { background: #fee2e2; border-color: #dc2626; }
+  #feedback { min-height: 24px; font-weight: bold; }
+  #next, #again {
+    margin-top: 8px;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    border: none;
+    background: black;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Python Quiz</h1>
+  <p id="progress"></p>
+  <div id="game">
+    <h2 id="question"></h2>
+    <div id="answers"></div>
+    <p id="feedback"></p>
+    <button id="next" class="hidden" onclick="nextQuestion()">Next</button>
+  </div>
+  <div id="result" class="hidden">
+    <h2 id="score"></h2>
+    <p id="scoreMessage"></p>
+    <button id="again" onclick="startGame()">Play again</button>
+  </div>
+</main>
+
+<script>
+// The quiz questions. Each one has the question text, the options, and
+// which option is correct (0 = first option, 1 = second, 2 = third).
+const questions = [
+  {
+    q: "What does print() do in Python?",
+    options: ["Shows text on the screen", "Sends a page to the printer", "Saves a file"],
+    answer: 0
+  },
+  {
+    q: "How do you write a comment in Python?",
+    options: ["// this is a comment", "# this is a comment", "<!-- this is a comment -->"],
+    answer: 1
+  },
+  {
+    q: "What does input() do?",
+    options: ["Deletes a variable", "Shows a popup window", "Reads what the user types"],
+    answer: 2
+  },
+  {
+    q: "Which line makes a variable called score with the value 0?",
+    options: ["score = 0", "0 = score", "make score 0"],
+    answer: 0
+  },
+  {
+    q: "When does the code under an if statement run?",
+    options: ["Always, every time", "Only when its condition is true", "Only at the end of the program"],
+    answer: 1
+  }
+];
+
+let current = 0;   // which question we are on
+let score = 0;     // how many correct so far
+
+function startGame() {
+  current = 0;
+  score = 0;
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("progress").textContent = "Question " + (current + 1) + " of " + questions.length;
+  document.getElementById("question").textContent = q.q;
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("next").classList.add("hidden");
+
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";  // clear the old buttons
+
+  // Make one button for each option.
+  // i is the option number: 0, 1 or 2. Same idea as a for loop in Python.
+  for (let i = 0; i < q.options.length; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = q.options[i];
+    btn.className = "answer-btn";
+    btn.onclick = function() { selectAnswer(i, btn); };
+    answersDiv.appendChild(btn);
+  }
+}
+
+function selectAnswer(i, btn) {
+  const q = questions[current];
+  const buttons = document.getElementById("answers").children;
+
+  // Lock all buttons so only one answer counts.
+  for (let j = 0; j < buttons.length; j++) {
+    buttons[j].disabled = true;
+  }
+
+  if (i === q.answer) {
+    btn.classList.add("correct");
+    score = score + 1;
+    document.getElementById("feedback").textContent = "Correct!";
+  } else {
+    btn.classList.add("wrong");
+    buttons[q.answer].classList.add("correct");
+    document.getElementById("feedback").textContent = "Not quite - the right answer is marked green.";
+  }
+
+  document.getElementById("next").classList.remove("hidden");
+}
+
+function nextQuestion() {
+  current = current + 1;
+  if (current < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById("game").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("progress").textContent = "";  // hide the question counter on the score screen
+  document.getElementById("score").textContent = "You scored " + score + " out of " + questions.length;
+
+  let message;
+  if (score === questions.length) {
+    message = "Perfect score! You really know your Python basics.";
+  } else if (score >= 3) {
+    message = "Nice work! A little more practice and you will have them all.";
+  } else {
+    message = "Good start - play again and watch your score grow.";
+  }
+  document.getElementById("scoreMessage").textContent = message;
+}
+
+// This runs once when the page opens, like running the program.
+startGame();
+</script>
+</body>
+</html>
