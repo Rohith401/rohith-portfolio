@@ -23,7 +23,12 @@ Hi, I am Rohith - welcome to my portfolio!
           >
            See my guessing game
           </a>
-      
+            <a
+            className="whitespace-nowrap flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-auto"
+            href="/quiz.html"
+          >
+            Play my quiz game
+          </a>
         </div>
       </main>
     </div>
