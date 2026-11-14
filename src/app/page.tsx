@@ -36,6 +36,19 @@ Hi, I am Rohith - welcome to my portfolio!
             Play my 2048 game
           </a>
         </div>
+      <div className="flex flex-col gap-4 w-full">
+          <p className="text-2xl font-bold text-black dark:text-zinc-50">My projects</p>
+          <div className="border border-zinc-300 dark:border-zinc-700 rounded-lg p-4 flex flex-col gap-2">
+            <p className="text-lg font-bold text-black dark:text-zinc-50">Quiz game</p>
+            <p className="text-zinc-600 dark:text-zinc-400">A 5-question quiz that runs in the browser and shows your score.</p>
+            <a href="/quiz.html" className="text-blue-600 underline">Play it</a>
+          </div>
+          <div className="border border-zinc-300 dark:border-zinc-700 rounded-lg p-4 flex flex-col gap-2">
+            <p className="text-lg font-bold text-black dark:text-zinc-50">2048 game</p>
+            <p className="text-zinc-600 dark:text-zinc-400">Slide the tiles and merge numbers to reach 2048.</p>
+            <a href="/2048.html" className="text-blue-600 underline">Play it</a>
+          </div>
+        </div>
       </main>
     </div>
   );
