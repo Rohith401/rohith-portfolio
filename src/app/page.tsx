@@ -48,6 +48,11 @@ Hi, I am Rohith - welcome to my portfolio!
             <p className="text-zinc-600 dark:text-zinc-400">Slide the tiles and merge numbers to reach 2048.</p>
             <a href="/2048.html" className="text-blue-600 underline">Play it</a>
           </div>
+         <div className="border border-zinc-300 dark:border-zinc-700 rounded-lg p-4 flex flex-col gap-2">
+            <p className="text-lg font-bold text-black dark:text-zinc-50">Task tracker</p>
+            <p className="text-zinc-600 dark:text-zinc-400">A Python program that saves your tasks to a file, so they survive restarts.</p>
+            <a href="https://github.com/Rohith401/python-practice" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">See the code</a>
+          </div>
         </div>
       </main>
     </div>
